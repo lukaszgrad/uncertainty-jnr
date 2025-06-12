@@ -19,7 +19,7 @@ The download includes the following splits:
 
 ### Copa America (CA12) Dataset
 
-Our proprietary Copa America dataset containing additional soccer player images for jersey number recognition.
+Our proprietary Copa America dataset containing player tracking information together with ground truth jersey number annotations with very high precision.
 
 **Access:** Please contact **Łukasz Grad** at **l.grad@mimuw.edu.pl** to request access for research purposes.
 
