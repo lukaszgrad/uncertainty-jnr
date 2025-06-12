@@ -7,11 +7,11 @@ University of Warsaw, Poland
 ReSpo.Vision, Poland  
 📧 Primary Contact: l.grad@mimuw.edu.pl
 
-</div>
-
 [![Paper](https://img.shields.io/badge/Paper-CVPR%202025-blue)](https://openaccess.thecvf.com/content/CVPR2025W/CVSPORTS/papers/Grad_Single-Stage_Uncertainty-Aware_Jersey_Number_Recognition_in_Soccer_CVPRW_2025_paper.pdf)
 [![Supplement](https://img.shields.io/badge/Supplement-PDF-red)](https://openaccess.thecvf.com/content/CVPR2025W/CVSPORTS/supplemental/Grad_Single-Stage_Uncertainty-Aware_Jersey_CVPRW_2025_supplemental.pdf)
 [![License](https://img.shields.io/badge/License-CC--BY--SA--4.0-green)](LICENSE)
+
+</div>
 
 ## 🔍 Overview
 
