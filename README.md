@@ -41,9 +41,8 @@ poetry shell
 ## 📚 Documentation
 
 - 📊 **[Dataset Information](docs/DATA.md)** - Information about datasets, access instructions, and data structure
-- 🏋️ **Training Guide** - *Coming soon*
-- 🔬 **Evaluation Guide** - *Coming soon*  
-- 🚀 **Inference Guide** - *Coming soon*
+- 🏋️ **Training & Evaluation Guides** - *Coming soon*
+- 💾 **Model checkpoints** - *Coming soon*
 
 ## 🏆 Results
 
