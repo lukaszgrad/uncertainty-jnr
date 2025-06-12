@@ -1,6 +1,6 @@
-# _Single-Stage Uncertainty-Aware Jersey Number Recognition in Soccer_
-
 <div align="center">
+
+# _Single-Stage Uncertainty-Aware Jersey Number Recognition in Soccer_
 
 **Łukasz Grad**  
 University of Warsaw, Poland  
@@ -18,10 +18,6 @@ ReSpo.Vision, Poland
 **TL; DR.** We present a single-stage uncertainty-aware approach for jersey number recognition in soccer that employs digit-compositional classifiers and Dirichlet-based uncertainty modeling, achieving 85.62% tracklet-level accuracy on the SoccerNet Challenge benchmark.
 
 ![Method Overview](https://lukaszgrad.github.io/jnr/static/images/cvsports_method2.png)
-
-## 📋 TODOs
-
-*Coming soon - development tasks and future improvements will be listed here.*
 
 ## 🚀 Installation
 
@@ -44,7 +40,10 @@ poetry shell
 
 ## 📚 Documentation
 
-*Coming soon - detailed documentation for training, evaluation, and inference will be provided.*
+- 📊 **[Dataset Information](docs/DATA.md)** - Information about datasets, access instructions, and data structure
+- 🏋️ **Training Guide** - *Coming soon*
+- 🔬 **Evaluation Guide** - *Coming soon*  
+- 🚀 **Inference Guide** - *Coming soon*
 
 ## 🏆 Results
 
