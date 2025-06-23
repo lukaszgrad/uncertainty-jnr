@@ -32,12 +32,34 @@ Our datasets follow a unified structure:
 └── {match_part}/
     ├── detection/
     │   ├── track.csv                    # Detection-level tracking info
-    │   └── jersey_number.csv            # Detection-level jersey predictions (baseline per-image predictions, contains visiblity information)
+    │   └── jersey_number.csv            # Detection-level jersey predictions (baseline per-image predictions, contains visibility information)
     ├── track/
     │   └── jersey_number_aggregated-annotated.csv  # Track-level GT jersey numbers
     ├── input_detections/
-        └── {frame:06d}_{detection_id}.png  # Input 
+        └── {file_name}_{detection_id}.png  # Input detection crops
 ```
+
+### Common Column Definitions
+
+- **`file_name`**: Frame number/identifier (integer) - uniquely identifies a video frame
+- **`detection_id`**: Detection identifier within a frame (integer/float) - uniquely identifies a detection within that frame  
+- **`track_id`**: Track identifier (integer) - links detections across frames belonging to the same player
+- **`jersey_number`**: Jersey number annotation (0-99) - the actual jersey number worn by the player
+- **`score`** / **`jersey_number_score`**: Confidence score (0.0-1.0) - indicates annotation quality/confidence
+
+### Image Naming Convention
+
+Detection crop images follow the pattern `{file_name}_{detection_id}.png`, where:
+- `file_name` may be zero-padded (e.g., `000001`) or unpadded (e.g., `1`) 
+- `detection_id` can be either integer or float format
+
+This results in multiple possible naming patterns for the same detection:
+- `000001_0.png` (padded file_name, integer detection_id)
+- `1_0.png` (unpadded file_name, integer detection_id)  
+- `000001_0.0.png` (padded file_name, float detection_id)
+- `1_0.0.png` (unpadded file_name, float detection_id)
+
+**Note:** A robust function `_get_possible_img_paths()` in the `data.py` module handles all these naming variations automatically when loading images.
 
 ### CSV File Formats
 
@@ -51,13 +73,18 @@ file_name,detection_id,track_id
 ```
 
 #### jersey_number.csv
-Contains detection-level jersey number annotations/predictions:
+Contains detection-level jersey number predictions from our baseline model:
 ```csv
 file_name,detection_id,jersey_number,score
 000001,0,10,1.0
 000002,1,10,0.95
 ...
 ```
+
+**Important Notes:**
+- When an entry exists in this file, it means a pseudo-label from our baseline model exists for this detection crop
+- The presence of an entry indicates the crop contains a **visible jersey number**
+- ⚠️ **These labels are noisy** - they are predictions from our baseline model, not ground truth
 
 #### jersey_number_aggregated-annotated.csv
 Contains track-level ground truth jersey numbers:
@@ -67,6 +94,10 @@ track_id,jersey_number,jersey_number_score
 5678,7,1.0
 ...
 ```
+
+**Important Notes:**
+- These GT jersey numbers were **manually checked** (CA12 dataset only) and have **very high precision** of annotation
+- `jersey_number_score` should be **1.0 at all times**  (for CA12 dataset) in this file (indicating perfect confidence in manual annotation)
 
 ## Notes
 
