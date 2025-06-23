@@ -23,6 +23,18 @@ Our proprietary Copa America dataset containing player tracking information toge
 
 **Access:** Please contact **Łukasz Grad** at **l.grad@mimuw.edu.pl** to request access for research purposes.
 
+### SoccerNet Dataset
+
+This dataset is parsed from the original SoccerNet train subset, containing original tracklet-level ground truth annotations combined with our pseudolabels from our baseline model.
+
+**Access:** The dataset is available through Google Drive:
+- 📁 [SoccerNet Dataset](https://drive.google.com/file/d/1o8FK6AsVN-UbIOqcGdmfL1-GWIJLrGYT/view?usp=sharing)
+
+**Contents:**
+- Original tracklet-level GT annotations from SoccerNet
+- Per-image predictions (pseudolabels) from our baseline model with jersey number visibility information
+- Special mapping file: `data/soccernet_train/full/detection_id_mapping.json` - contains mapping from our unique identifiers to original SoccerNet identifiers
+
 ## Data Structure
 
 Our datasets follow a unified structure:
