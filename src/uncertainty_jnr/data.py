@@ -579,3 +579,111 @@ class JerseyNumberDataset(Dataset):
             self.logger.info(
                 f"Numbers present in dataset after masking: {sorted(remaining_numbers)}"
             )
+
+
+class SimpleImageDataset(Dataset):
+    """Simple dataset for loading images from a directory for inference."""
+
+    def __init__(
+        self,
+        image_dir: Path | str,
+        target_size: tuple[int, int] = (128, 64),
+        transform: Optional[Callable] = None,
+    ):
+        """Initialize simple image dataset.
+
+        Parameters
+        ----------
+        image_dir : Path | str
+            Directory containing images
+        target_size : tuple[int, int]
+            Target size for images (height, width)
+        transform : Optional[Callable]
+            Optional transform to apply to images
+        """
+        self.image_dir = Path(image_dir)
+        self.target_size = target_size
+        self.transform = transform
+        self.logger = logging.getLogger(__name__)
+
+        # Find all supported image files
+        supported_extensions = {".png", ".jpg", ".jpeg"}
+        self.image_paths = []
+
+        for ext in supported_extensions:
+            self.image_paths.extend(self.image_dir.glob(f"*{ext}"))
+            self.image_paths.extend(self.image_dir.glob(f"*{ext.upper()}"))
+
+        self.image_paths.sort()
+
+        if not self.image_paths:
+            self.logger.warning(f"No supported images found in {self.image_dir}")
+        else:
+            self.logger.info(
+                f"Found {len(self.image_paths)} images in {self.image_dir}"
+            )
+
+    def __len__(self) -> int:
+        return len(self.image_paths)
+
+    def _load_image(self, image_path: Path) -> tuple[torch.Tensor, int, int]:
+        """Load and preprocess image.
+
+        Parameters
+        ----------
+        image_path : Path
+            Path to image file
+
+        Returns
+        -------
+        tuple[torch.Tensor, int, int]
+            Tuple of (image tensor, original width, original height)
+        """
+        img = cv2.imread(str(image_path))
+        if img is None:
+            self.logger.warning(f"Failed to load image: {image_path}")
+            return (
+                torch.zeros(
+                    (3, self.target_size[0], self.target_size[1]), dtype=torch.float32
+                ),
+                64,
+                128,
+            )
+
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        orig_height, orig_width = img.shape[:2]
+
+        # Apply transforms if provided
+        if self.transform is not None:
+            transformed = self.transform(image=img)
+            img = transformed["image"]
+
+            # Use captured dimensions if available
+            width = transformed.get("width", orig_width)
+            height = transformed.get("height", orig_height)
+        else:
+            img = cv2.resize(img, (self.target_size[1], self.target_size[0]))
+            width = orig_width
+            height = orig_height
+
+        # Convert to tensor and normalize
+        img = torch.from_numpy(img.transpose(2, 0, 1))
+        return (img.float() / 127.5) - 1.0, width, height
+
+    def __getitem__(self, idx: int) -> dict:
+        """Get a sample from the dataset."""
+        image_path = self.image_paths[idx]
+
+        image, width, height = self._load_image(image_path)
+
+        # Calculate diagonal and apply clamping
+        diagonal = torch.Tensor([np.sqrt(width**2 + height**2)])
+        diagonal = diagonal.clamp(min=32, max=128)
+
+        return {
+            "image": image,
+            "image_path": image_path.stem,  # Filename without extension
+            "width": width,
+            "height": height,
+            "diagonal": diagonal,
+        }
