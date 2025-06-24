@@ -41,25 +41,26 @@ poetry shell
 ## 📚 Documentation
 
 - 📊 **[Dataset Information](docs/DATA.md)** - Information about datasets, access instructions, and data structure
+- 🔮 **[Inference Guide](docs/INFERENCE.md)** - How to use pretrained models for jersey number recognition
 - 🏋️ **Training & Evaluation Guides** - *Coming soon*
-- 💾 **Model checkpoints** - *Coming soon*
+- 💾 **Model checkpoints** - Available in the Results table below
 
 ## 🏆 Results
 
 ### Comparison with Prior Work on SoccerNet Benchmarks
 
-| Method | Test Acc | Challenge Acc |
-|--------|----------|---------------|
-| Gerke et al. (2015) | 32.57% | 35.79% |
-| Vats et al. (2021) | 46.73% | 49.88% |
-| Li et al. (2018) | 47.85% | 50.60% |
-| Vats et al. (2022) | 52.91% | 58.45% |
-| Balaji et al. (2023) | 68.53% | 73.77% |
-| Koshkina et al. (2024) | 87.45% | 79.31% |
-| **Ours (ViT-S, SoccerNet Dataset)** | 82.74% | - |
-| **Ours (ViT-B, SoccerNet Dataset)** | 86.37% | 83.52% |
-| **Ours (ViT-B, 200M Dataset)** | 85.46% | **85.62%** |
-| **Ours (ViT-B, 200M + SoccerNet finetuned)** | **88.27%** | 85.41% |
+| Method | Test Acc | Challenge Acc | Download |
+|--------|----------|---------------|----------|
+| Gerke et al. (2015) | 32.57% | 35.79% | - |
+| Vats et al. (2021) | 46.73% | 49.88% | - |
+| Li et al. (2018) | 47.85% | 50.60% | - |
+| Vats et al. (2022) | 52.91% | 58.45% | - |
+| Balaji et al. (2023) | 68.53% | 73.77% | - |
+| Koshkina et al. (2024) | 87.45% | 79.31% | - |
+| **Ours (ViT-S, SoccerNet Dataset)** | 82.74% | - | [checkpoint](https://drive.google.com/file/d/1oc8VdEHHxXQfhNZTvbHbm6gfLRkwGl2o/view?usp=sharing) \| [config](configs/small16_reid.yaml) |
+| **Ours (ViT-B, SoccerNet Dataset)** | 86.37% | 83.52% | [checkpoint](https://drive.google.com/file/d/16npJY-gyboRE_HNTQI1dC_fIxh3oxa0S/view?usp=drive_link) \| [config](configs/base8_reid.yaml) |
+| **Ours (ViT-B, 200M Dataset)** | 85.46% | **85.62%** | - |
+| **Ours (ViT-B, 200M + SoccerNet finetuned)** | **88.27%** | 85.41% | - |
 
 *Tracklet-level accuracy results. Prior work results are taken from Koshkina et al. (2024).*
 
