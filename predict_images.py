@@ -150,6 +150,10 @@ def main():
             probs = model_output.number_probs
             uncertainty = model_output.uncertainty.cpu().numpy()
 
+            # Ensure uncertainty is always 1-D for proper indexing
+            if uncertainty.ndim == 0:
+                uncertainty = np.array([uncertainty])
+
             # Get top predictions
             pred_scores, pred_numbers = torch.max(probs, dim=1)
             pred_scores = pred_scores.cpu().numpy()
