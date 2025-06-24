@@ -1,0 +1,51 @@
+data:
+  root_dir: "data"
+  cache_dir: "cache"
+  target_size: [224, 224]  # Standard ViT input size
+  train_val_split: 0.8
+  batch_size: 64
+  val_batch_size: 64
+  num_workers: 8
+  pin_memory: true
+  train_dataset_names: ["reid_all", "soccernet_train_full"]
+  val_dataset_names: ["soccernet_test_sample", "base"]  # Use the base validation dataset
+
+model:
+  model_name: "vit_base_patch8_224.augreg2_in21k_ft_in1k"
+  pretrained: true
+  gradient_clip_val: 1.0
+  finetune_from: null
+  # Uncertainty modeling parameters
+  classifier_type: "tied_digit_aware"  # Options: "independent", "digit_aware", "tied_digit_aware"
+  uncertainty_head: "dirichlet"  # Options: "dirichlet", "softmax"
+  embedding_type: "multiplicative"  # For tied_digit_aware classifier
+  per_digit_bias: false  # For tied_digit_aware classifier
+
+# Loss function configuration
+loss:
+  loss_type: "dirichlet"  # Options: "dirichlet", "softmax"
+  # Dirichlet loss parameters
+  warmup_steps: 2500
+  reg_weight: 0.001
+  max_reg_weight: 0.05
+  # Softmax loss parameters
+  label_smoothing: 0.01
+
+training:
+  seed: 42
+  max_epochs: 4
+  learning_rate: 2.0e-4  # Double GPU training
+  warmup_steps: 500
+  final_lr_scale: 4.0e-1  # 0.1 of maximum learning rate
+  use_amp: true
+  compile_model: true  # Set to true for PyTorch 2.0+ if needed
+  debug: false
+  debug_samples: 1000
+  logging_steps: 250
+  validation_steps: 2000
+  repeat_train_dataset: 1
+
+logging:
+  base_dir: "runs"
+  experiment_name: "base8_reid"
+  num_val_visualizations: 16 
